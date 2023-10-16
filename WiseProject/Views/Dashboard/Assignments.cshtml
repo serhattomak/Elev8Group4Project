@@ -150,14 +150,40 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link collapsed" asp-controller="Dashboard" asp-action="Admin">
-                    <i class="bi bi-person"></i>
-                    <span>Admin</span>
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-key"></i><span>Admin</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a asp-controller="Admin" asp-action="Users">
+                            <i class="bi bi-circle"></i><span>Manage Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Roles">
+                            <i class="bi bi-circle"></i><span>Manage Roles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Courses">
+                            <i class="bi bi-circle"></i><span>Manage Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Assignments">
+                            <i class="bi bi-circle"></i><span>Manage Assignments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Enrollments">
+                            <i class="bi bi-circle"></i><span>Manage Enrollments</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" asp-controller="Dashboard" asp-action="Instructor">
-                    <i class="bi bi-person"></i>
+                    <i class="bi bi-briefcase"></i>
                     <span>Instructor</span>
                 </a>
             </li>

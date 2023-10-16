@@ -1,16 +1,16 @@
-﻿@model WiseProject.Models.Course
+﻿@model WiseProject.Models.Enrollment
 
 
 <div class="card mb-3">
     <div class="row g-0">
         <div class="col-md-4">
-            <img src="~/images/@Model.ImageUrl" class="img-fluid rounded-start" alt="@Model.Title">
+            <img src="~/images/@Model.Course.ImageUrl" class="img-fluid rounded-start" alt="@Model.CourseTitle">
         </div>
         <div class="col-md-8">
             <div class="card-body">
-                <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"><h4>@Model.Title</h4></a>
-                <h4>@Model.Category</h4>
-                <p class="card-text">@Model.Description</p>
+                <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"><h4>@Model.CourseTitle</h4></a>
+                <h4>@Model.Course.Category</h4>
+                <p class="card-text">@Model.Course.Description</p>
             </div>
         </div>
     </div>

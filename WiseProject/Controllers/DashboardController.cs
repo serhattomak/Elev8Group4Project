@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
@@ -25,12 +26,12 @@ namespace WiseProject.Controllers
             return View();
         }
 
-        [Authorize(Roles = "admin")]
+        //[Authorize(Roles = "admin")]
         public IActionResult Admin()
         {
             return View();
         }
-        [Authorize(Roles = "admin,instructor")]
+        //[Authorize(Roles = "admin,instructor")]
         public IActionResult Instructor()
         {
             return View();

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<Enrollment>
+@{
     Layout = null;
 }
 
@@ -155,14 +156,40 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-controller="Dashboard" asp-action="Admin">
-                    <i class="bi bi-person"></i>
-                    <span>Admin</span>
+                <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-key"></i><span>Admin</span><i class="bi bi-chevron-down ms-auto"></i>
                 </a>
+                <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a asp-controller="Admin" asp-action="Users">
+                            <i class="bi bi-circle"></i><span>Manage Users</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Roles">
+                            <i class="bi bi-circle"></i><span>Manage Roles</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Courses">
+                            <i class="bi bi-circle"></i><span>Manage Courses</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Assignments">
+                            <i class="bi bi-circle"></i><span>Manage Assignments</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a asp-controller="Admin" asp-action="Enrollments">
+                            <i class="bi bi-circle"></i><span>Manage Enrollments</span>
+                        </a>
+                    </li>
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link collapsed" asp-controller="Dashboard" asp-action="Instructor">
-                    <i class="bi bi-person"></i>
+                    <i class="bi bi-briefcase"></i>
                     <span>Instructor</span>
                 </a>
             </li>
@@ -179,46 +206,56 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Admin</li>
+                    <li class="breadcrumb-item active">Admin / Enrollments</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
 
         <section class="section profile">
-            <div class="col-lg-6">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Users</h5>
-                        
-
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Roles</h5>
-
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Courses</h5>
-
-                    </div>
-                </div>
+            <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Manage Enrollments</h5>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var enrollment in Model)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-header">
+                                        Enrollment Id: @enrollment.Id
+                                    </div>
+                                    <div class="card-body">
+                                        <h5 class="card-text">@enrollment.CourseId</h5>
+                                        <h5 class="card-title">@enrollment.CourseTitle</h5>
+                                        <h5 class="card-text">@enrollment.UserId</h5>
+                                        <h5 class="card-text">@enrollment.User</h5>
+                                        <h5 class="card-text">@enrollment.EnrollmentDate</h5>
+                                    </div>
+                                    <div class="card-footer">
+                                        <a asp-controller="Admin" asp-action="EditEnrollment">Edit</a>
+                                        <a asp-controller="Admin" asp-action="DeleteEnrollment">Delete</a>
 
+                                    </div>
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="card">
+                                <div class="card-header">
+                                    No enrollments created yet
+                                </div>
+                            </div>
+                            <h5 class="card-title">
+                                Use the button below to create a enrollment
+                            </h5>
+                            <a class="btn btn-primary" style="width:auto"
+                               asp-controller="Enrollment" asp-action="Create">
+                                Add new enrollment
+                            </a>
+                        }
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Assignments</h5>
-                        
-                    </div>
-                </div>
-                
             </div>
         </section>
 
