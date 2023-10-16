@@ -1,0 +1,93 @@
+﻿@model WiseProject.Models.Course
+
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="courses-grid" role="tabpanel" aria-labelledby="courses-grid-tab">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="singel-course mt-30">
+                    <div class="thum">
+                        <div class="image">
+                            <img src="/images/course/@Model.ImageUrl" alt="@Model.Title">
+                        </div>
+                        <div class="price">
+                            <span>Free</span>
+                        </div>
+                    </div>
+                    <div class="cont">
+                        <ul>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                            <li><i class="fa fa-star"></i></li>
+                        </ul>
+                        <span>(20 Reviews)</span>
+                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"><h4>@Model.Title</h4></a>
+                        <div class="course-teacher">
+                            <div class="thum">
+                                <a href="#"><img src="~/images/course/teacher/t-1.jpg" alt="teacher"></a>
+                            </div>
+                            <div class="name">
+                                <a href="#"><h6>Mark anthem</h6></a>
+                            </div>
+                            <div class="admin">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
+                                    <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- singel course -->
+            </div>
+        </div> <!-- row -->
+    </div>
+    <div class="tab-pane fade" id="courses-list" role="tabpanel" aria-labelledby="courses-list-tab">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="singel-course mt-30">
+                    <div class="row no-gutters">
+                        <div class="col-md-6">
+                            <div class="thum">
+                                <div class="image">
+                                    <img src="~/images/course/@Model.ImageUrl" alt="@Model.Title">
+                                </div>
+                                <div class="price">
+                                    <span>Free</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="cont">
+                                <ul>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                    <li><i class="fa fa-star"></i></li>
+                                </ul>
+                                <span>(20 Reviews)</span>
+                                <a href="#"><h4>Learn basis javascript from start for beginner</h4></a>
+                                <div class="course-teacher">
+                                    <div class="thum">
+                                        <a href="#"><img src="~/images/course/teacher/t-1.jpg" alt="teacher"></a>
+                                    </div>
+                                    <div class="name">
+                                        <a href="#"><h6>Mark anthem</h6></a>
+                                    </div>
+                                    <div class="admin">
+                                        <ul>
+                                            <li><a href="#"><i class="fa fa-user"></i><span>31</span></a></li>
+                                            <li><a href="#"><i class="fa fa-heart"></i><span>10</span></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div> <!--  row  -->
+                </div> <!-- singel course -->
+            </div>
+        </div>
+    </div>
+</div> <!-- tab content -->
+
