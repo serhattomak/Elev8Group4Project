@@ -53,7 +53,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Admin / Enrollments</li>
+                    <li class="breadcrumb-item active"><a asp-controller="Admin" asp-action="Enrollments">Admin / Enrollments</a></li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -72,11 +72,11 @@
                                         Enrollment Id: @enrollment.Id
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-text">@enrollment.CourseId</h5>
-                                        <h5 class="card-title">@enrollment.CourseTitle</h5>
-                                        <h5 class="card-text">@enrollment.UserId</h5>
-                                        <h5 class="card-text">@enrollment.User</h5>
-                                        <h5 class="card-text">@enrollment.EnrollmentDate</h5>
+                                        <h5 class="card-text">Course Id: @enrollment.CourseId</h5>
+                                        <h5 class="card-title">Course: @enrollment.CourseTitle</h5>
+                                        <h5 class="card-text">User Id: @enrollment.UserId</h5>
+                                        <h5 class="card-text">User: @enrollment.User</h5>
+                                        <h5 class="card-text">Enrollment Date: @enrollment.EnrollmentDate</h5>
                                     </div>
                                     <div class="card-footer">
                                         <a asp-controller="Admin" asp-action="EditEnrollment">Edit</a>

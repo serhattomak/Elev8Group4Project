@@ -1,12 +1,11 @@
-﻿namespace WiseProject.Models
+﻿using Microsoft.AspNetCore.Identity;
+
+namespace WiseProject.Models
 {
-    public class User : IEntity
+    public class User : IdentityUser<int>, IEntity
     {
-        public string Id { get; set; }
-        public string UserName { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Email { get; set; }
-        public List<Enrollment> Enrollments { get; set; }=new List<Enrollment>();
+        public List<Enrollment> Enrollments { get; set; } = new List<Enrollment>();
     }
 }

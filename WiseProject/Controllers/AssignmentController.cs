@@ -18,14 +18,14 @@ namespace WiseProject.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Create(Assignment model)
         {
             if (ModelState.IsValid)
@@ -47,24 +47,24 @@ namespace WiseProject.Controllers
             }
             return View(model);
         }
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Delete(int id)
         {
             return View(_assignmentService.Get(id).Data);
         }
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Edit(int id)
         {
             return View(_assignmentService.Get(id).Data);
         }
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost, ActionName("Delete")]
         public IActionResult DeleteConfirmed(int id)
         {
             _assignmentService.Delete(id);
             return RedirectToAction("Assignments", "Dashboard");
         }
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         [HttpPost]
         public IActionResult Edit(Assignment assignment)
         {

@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using WiseProject.Business.Abstract;
 using WiseProject.Business.Concrete;
 using WiseProject.DAL.Abstract;
 using WiseProject.Data;
 using WiseProject.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,8 +16,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<User, Role>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+builder.Services.AddRazorPages();
 builder.Services.AddControllersWithViews();
 
 
@@ -30,6 +34,7 @@ builder.Services.AddScoped<IAssignmentService, AssignmentManager>();
 
 builder.Services.AddScoped<ICourseDal, CourseDal>();
 builder.Services.AddScoped<ICourseService, CourseManager>();
+
 
 var app = builder.Build();
 

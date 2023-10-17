@@ -6,8 +6,8 @@ namespace WiseProject.Models
     {
         public static async Task InitAsync(IServiceProvider service)
         {
-            var roleManager = service.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = service.GetRequiredService<UserManager<IdentityUser>>();
+            var roleManager = service.GetRequiredService<RoleManager<Role>>();
+            var userManager = service.GetRequiredService<UserManager<User>>();
 
             string[] roleNames = { "Admin", "User", "Instructor" };
 
@@ -17,7 +17,7 @@ namespace WiseProject.Models
                 var roleExists = await roleManager.RoleExistsAsync(role);
                 if (!roleExists)
                 {
-                    roleResult = await roleManager.CreateAsync(new IdentityRole(role));
+                    roleResult = await roleManager.CreateAsync(new Role(){Name = role});
                 }
             }
 
@@ -26,7 +26,7 @@ namespace WiseProject.Models
 
             if (userManager.FindByEmailAsync(email).Result == null)
             {
-                IdentityUser admin = new()
+                User admin = new()
                 {
                     Email = email,
                     UserName = email

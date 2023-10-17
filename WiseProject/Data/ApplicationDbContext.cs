@@ -4,7 +4,7 @@ using WiseProject.Models;
 
 namespace WiseProject.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User,Role, int>
     {
         public ApplicationDbContext()
         {

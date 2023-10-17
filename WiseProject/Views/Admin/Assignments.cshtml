@@ -52,7 +52,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Admin / Assignments</li>
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Assignments">Admin / Assignments</a></li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -71,13 +71,13 @@
                                         Assignment Id: @assignment.Id
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">@assignment.Title</h5>
-                                        <h5 class="card-text">@assignment.CourseId</h5>
-                                        <h5 class="card-title">@assignment.CourseTitle</h5>
-                                        <h5 class="card-title">@assignment.Description</h5>
-                                        <h5 class="card-text">@assignment.UserId</h5>
-                                        <h5 class="card-text">@assignment.User</h5>
-                                        <h5 class="card-text">@assignment.DueDate</h5>
+                                        <h5 class="card-title">Assignment: @assignment.Title</h5>
+                                        <h5 class="card-text">Course Id: @assignment.CourseId</h5>
+                                        <h5 class="card-title">Course: @assignment.CourseTitle</h5>
+                                        <h5 class="card-title">Description: @assignment.Description</h5>
+                                        <h5 class="card-text">User Id: @assignment.UserId</h5>
+                                        <h5 class="card-text">User: @assignment.User</h5>
+                                        <h5 class="card-text">Due Date: @assignment.DueDate</h5>
                                     </div>
                                     <div class="card-footer">
                                         <a asp-controller="Admin" asp-action="EditAssignment">Edit</a>

@@ -10,10 +10,10 @@ namespace WiseProject.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly ApplicationDbContext _context;
-        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+        public AdminController(UserManager<User> userManager, RoleManager<Role> roleManager, ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
@@ -63,8 +63,7 @@ namespace WiseProject.Controllers
 
         public IActionResult DeleteUser(int userId)
         {
-            var temp = Convert.ToString(userId);
-            var user = _userManager.FindByIdAsync(temp).Result;
+            var user = _userManager.FindByIdAsync(userId.ToString()).Result;
             if (user == null)
             {
                 return RedirectToAction("Users");
@@ -107,11 +106,11 @@ namespace WiseProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateRole(IdentityRole role)
+        public IActionResult CreateRole(Role role)
         {
             if (ModelState.IsValid)
             {
-                var result = _roleManager.CreateAsync(new IdentityRole(role.Name)).Result;
+                var result = _roleManager.CreateAsync(new Role(){Name = role.Name}).Result;
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Roles");
@@ -132,11 +131,11 @@ namespace WiseProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditRole(IdentityRole role)
+        public IActionResult EditRole(Role role)
         {
             if (ModelState.IsValid)
             {
-                var existingRole = _roleManager.FindByIdAsync(role.Id).Result;
+                var existingRole = _roleManager.FindByIdAsync(role.Id.ToString()).Result;
                 if (existingRole == null)
                 {
                     return RedirectToAction("Roles");
@@ -160,8 +159,7 @@ namespace WiseProject.Controllers
 
         public IActionResult DeleteRole(int roleId)
         {
-            var temp = Convert.ToString(roleId);
-            var role = _roleManager.FindByIdAsync(temp).Result;
+            var role = _roleManager.FindByIdAsync(roleId.ToString()).Result;
             if (role == null)
             {
                 return RedirectToAction("Roles");

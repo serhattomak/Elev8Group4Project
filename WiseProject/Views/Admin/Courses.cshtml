@@ -71,12 +71,13 @@
                                         Course Id: @course.Id
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">@course.Title</h5>
-                                        <h5 class="card-text">@course.Category</h5>
-                                        <h5 class="card-text">@course.Description</h5>
-                                        <h5 class="card-text">@course.Assignment</h5>
-                                        <h5 class="card-text">@course.Enrollments</h5>
-                                        <h5 class="card-text">@course.ImageUrl</h5>
+                                        <img src="~/images/course/@course.ImageUrl"/>
+                                        <h5 class="card-title">Course: @course.Title</h5>
+                                        <h5 class="card-text">Category: @course.Category</h5>
+                                        <h5 class="card-text">Description: @course.Description</h5>
+                                        <h5 class="card-text">Assignments: @course.Assignment</h5>
+                                        <h5 class="card-text">Enrollments: @course.Enrollments</h5>
+                                        <h5 class="card-text">Image Url: @course.ImageUrl</h5>
                                     </div>
                                     <div class="card-footer">
                                         <a asp-controller="Admin" asp-action="EditCourse">Edit</a>

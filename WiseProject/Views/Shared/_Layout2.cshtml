@@ -145,10 +145,10 @@
             @if (User.IsInRole("Admin"))
             {
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <a class="nav-link collapsed" data-bs-target="#admin-nav" data-bs-toggle="collapse" href="#">
                         <i class="bi bi-key"></i><span>Admin</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="admin-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             <a asp-controller="Admin" asp-action="Users">
                                 <i class="bi bi-circle"></i><span>Manage Users</span>
@@ -180,10 +180,10 @@
             @if (User.IsInRole("Admin")||User.IsInRole("Instructor"))
             {
                 <li class="nav-item">
-                    <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+                    <a class="nav-link collapsed" data-bs-target="#instructor-nav" data-bs-toggle="collapse" href="#">
                         <i class="bi bi-briefcase"></i><span>Instructor</span><i class="bi bi-chevron-down ms-auto"></i>
                     </a>
-                    <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                    <ul id="instructor-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                         <li>
                             <a asp-controller="Instructor" asp-action="Courses">
                                 <i class="bi bi-circle"></i><span>Manage Courses</span>

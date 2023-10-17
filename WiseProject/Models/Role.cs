@@ -1,13 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
 
 namespace WiseProject.Models
 {
-    public class Role : IEntity
+    public class Role : IdentityRole<int>, IEntity
     {
-        [Key]
-        public string Id { get; set; }
-        public string Name { get; set; }
 
-        
     }
 }
