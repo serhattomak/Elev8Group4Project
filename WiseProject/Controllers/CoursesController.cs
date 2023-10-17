@@ -47,7 +47,7 @@ namespace WiseProject.Controllers
         }
 
         // GET: Courses/Create
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Create()
         {
             return View();
@@ -58,7 +58,7 @@ namespace WiseProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Create([Bind("Id,UserId,Title,Description,Category,EnrollmentCount,ImageUrl")] Course course)
         {
             if (ModelState.IsValid)
@@ -71,7 +71,7 @@ namespace WiseProject.Controllers
         }
 
         // GET: Courses/Edit/5
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Courses == null)
@@ -92,7 +92,7 @@ namespace WiseProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Edit(int id, [Bind("Id,UserId,Title,Description,Category,EnrollmentCount,ImageUrl")] Course course)
         {
             if (id != course.Id)
@@ -124,7 +124,7 @@ namespace WiseProject.Controllers
         }
 
         // GET: Courses/Delete/5
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Courses == null)
@@ -145,7 +145,7 @@ namespace WiseProject.Controllers
         // POST: Courses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "admin,instructor")]
+        [Authorize(Roles = "Admin,Instructor")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             if (_context.Courses == null)

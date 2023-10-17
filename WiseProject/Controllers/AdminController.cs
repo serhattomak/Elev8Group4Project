@@ -67,7 +67,7 @@ namespace WiseProject.Controllers
             var user = _userManager.FindByIdAsync(temp).Result;
             if (user == null)
             {
-                return RedirectToAction("ListUsers");
+                return RedirectToAction("Users");
             }
 
             return View("DeleteUser", user);
@@ -79,13 +79,13 @@ namespace WiseProject.Controllers
             var user = _userManager.FindByIdAsync(userId).Result;
             if (user == null)
             {
-                return RedirectToAction("ListUsers");
+                return RedirectToAction("Users");
             }
 
             var result = _userManager.DeleteAsync(user).Result;
             if (result.Succeeded)
             {
-                return RedirectToAction("ListUsers");
+                return RedirectToAction("Users");
             }
 
             foreach (var error in result.Errors)

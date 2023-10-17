@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Assignment>
+﻿@model IEnumerable<Course>
 @{
     Layout = "_Layout2";
 }
@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Admin - Assignments</title>
+    <title>Group 4 Project</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -52,7 +52,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Admin / Assignments</li>
+                    <li class="breadcrumb-item active">Instructor / Courses</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -61,28 +61,25 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Manage Assignments</h5>
+                        <h5 class="card-title">Manage Courses</h5>
                         @if (Model != null && Model.Any())
                         {
-                            foreach (var assignment in Model)
+                            foreach (var course in Model)
                             {
                                 <div class="card mb-3">
                                     <div class="card-header">
-                                        Assignment Id: @assignment.Id
+                                        Course Id: @course.Id
                                     </div>
                                     <div class="card-body">
-                                        <h5 class="card-title">@assignment.Title</h5>
-                                        <h5 class="card-text">@assignment.CourseId</h5>
-                                        <h5 class="card-title">@assignment.CourseTitle</h5>
-                                        <h5 class="card-title">@assignment.Description</h5>
-                                        <h5 class="card-text">@assignment.UserId</h5>
-                                        <h5 class="card-text">@assignment.User</h5>
-                                        <h5 class="card-text">@assignment.DueDate</h5>
+                                        <h5 class="card-title">@course.Title</h5>
+                                        <h5 class="card-text">@course.Category</h5>
+                                        <h5 class="card-text">@course.Description</h5>
+                                        <h5 class="card-text">@course.Assignment</h5>
+                                        <h5 class="card-text">@course.Enrollments</h5>
+                                        <h5 class="card-text">@course.ImageUrl</h5>
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-controller="Admin" asp-action="EditAssignment">Edit</a>
-                                        <a asp-controller="Admin" asp-action="DeleteAssignment">Delete</a>
-
+                                        <a asp-controller="Instructor" asp-action="EditCourse">Edit</a>
                                     </div>
                                 </div>
                             }
@@ -91,17 +88,18 @@
                         {
                             <div class="card">
                                 <div class="card-header">
-                                    No assignments created yet
+                                    No courses created yet
                                 </div>
                             </div>
                             <h5 class="card-title">
-                                Use the button below to create a assignment
+                                Use the button below to create a course
                             </h5>
                             <a class="btn btn-primary" style="width:auto"
-                               asp-controller="Assignment" asp-action="Create">
-                                Add new assignment
+                               asp-controller="Course" asp-action="Create">
+                                Add new course
                             </a>
                         }
+                        <a class="btn btn-primary" asp-controller="Course" asp-action="Create">Create Course</a>
                     </div>
                 </div>
             </div>

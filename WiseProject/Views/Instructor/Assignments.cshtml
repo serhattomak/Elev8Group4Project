@@ -52,7 +52,7 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item active">Admin / Assignments</li>
+                    <li class="breadcrumb-item active">Instructor / Assignments</li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
@@ -80,8 +80,8 @@
                                         <h5 class="card-text">@assignment.DueDate</h5>
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-controller="Admin" asp-action="EditAssignment">Edit</a>
-                                        <a asp-controller="Admin" asp-action="DeleteAssignment">Delete</a>
+                                        <a asp-controller="Instructor" asp-action="EditAssignment">Edit</a>
+                                        <a asp-controller="Instructor" asp-action="DeleteAssignment">Delete</a>
 
                                     </div>
                                 </div>
