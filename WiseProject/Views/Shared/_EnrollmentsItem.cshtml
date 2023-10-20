@@ -1,17 +1,45 @@
-﻿@model WiseProject.Models.Enrollment
+﻿@model List<WiseProject.Models.Enrollment>
+<style>
+    .card-body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
+    .card-info {
+        margin-bottom: 40px;
+    }
 
-<div class="card mb-3">
-    <div class="row g-0">
-        <div class="col-md-4">
-            <img src="~/images/@Model.Course.ImageUrl" class="img-fluid rounded-start" alt="@Model.CourseTitle">
-        </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <a asp-controller="Courses" asp-action="Details" asp-route-id="@Model.Id"><h4>@Model.CourseTitle</h4></a>
-                <h4>@Model.Course.Category</h4>
-                <p class="card-text">@Model.Course.Description</p>
+        .card-info:last-child {
+            margin-bottom: 0;
+        }
+
+</style>
+@foreach (var enrollment in Model)
+{
+    <div class="col-lg-6">
+        <div class="card mb-3">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="~/images/course/@enrollment.Course.ImageUrl" class="img-fluid rounded-start" alt="@enrollment.Course.Title">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <div class="card-info">
+                            <span>Title: </span>
+                            <a asp-controller="Courses" asp-action="Details" asp-route-id="@enrollment.Id">@enrollment.Course.Title</a>
+                        </div>
+                        <div class="card-info">
+                            <span>Category: </span>
+                            <span>@enrollment.Course.Category</span>
+                        </div>
+                        <div class="card-info">
+                            <span>Description: </span>
+                            <span>@enrollment.Course.Description</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
+        </div><!-- End Card with an image on left -->
     </div>
-</div>
+}

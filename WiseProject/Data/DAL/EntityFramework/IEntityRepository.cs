@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Security.Principal;
 
-namespace WiseProject.DAL.EntityFramework
+namespace WiseProject.Data.DAL.EntityFramework
 {
     public interface IEntityRepository<T> where T : class, IEntity, new()
     {

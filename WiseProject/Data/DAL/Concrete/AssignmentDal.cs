@@ -1,10 +1,12 @@
-﻿using WiseProject.DAL.EntityFramework;
-using WiseProject.Data;
+﻿using WiseProject.Data;
+using WiseProject.Data.DAL.Abstract;
+using WiseProject.Data.DAL.Concrete;
+using WiseProject.Data.DAL.EntityFramework;
 using WiseProject.Models;
 
-namespace WiseProject.DAL.Abstract
+namespace WiseProject.Data.DAL.Concrete
 {
-    public class AssignmentDal:EfEntityRepositoryBase<Assignment, ApplicationDbContext>, IAssignmentDal
+    public class AssignmentDal : EfEntityRepositoryBase<Assignment, ApplicationDbContext>, IAssignmentDal
     {
     }
 }

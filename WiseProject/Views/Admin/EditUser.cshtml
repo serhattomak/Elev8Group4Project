@@ -22,7 +22,8 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Edit User</h5>
-                        <form asp-action="EditUser">
+                        <form asp-controller="Admin" asp-action="EditUser" method="post">
+                            <input type="hidden" asp-for="Id" />
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Email" class="col-sm-2 col-form-label"></label>
@@ -39,21 +40,27 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="FirstName" class="control-label"></label>
+                                <label asp-for="Enrollments" class="control-label"></label>
                                 <div class="col-sm-10">
-                                    <input asp-for="FirstName" class="form-control" />
-                                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                                    <select class="multiple-select" name="SelectedEnrollments" multiple="multiple">
+                                        @foreach (var enrollment in Model.Enrollments)
+                                        {
+                                            if (Model.Enrollments.Any(e => e.Id == enrollment.Id))
+                                            {
+                                                <option value="@enrollment.Id" selected>@enrollment.Course.Title</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@enrollment.Id">@enrollment.Course.Title</option>
+                                            }
+                                        }
+                                    </select>
+                                    @* <input asp-for="Enrollments" class="form-control"/>
+                                    <span asp-validation-for="Enrollments" class="text-danger"></span> *@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label asp-for="LastName" class="control-label"></label>
-                                <div class="col-sm-10">
-                                    <input asp-for="LastName" class="form-control" />
-                                    <span asp-validation-for="LastName" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Edit" class="btn btn-primary" />
+                                <input type="submit" value="Save" class="btn btn-primary" />
                             </div>
                         </form>
                     </div>
@@ -64,10 +71,15 @@
 </main>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Users">Back to List</a>
 </div>
 @section Scripts {
-    @{
+    @* @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    } *@
+    <script>
+        $(document).ready(function () {
+            $('.multiple-select').select2();
+        });
+    </script>
 }

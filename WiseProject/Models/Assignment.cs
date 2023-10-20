@@ -7,16 +7,11 @@ namespace WiseProject.Models
     {
         [Key]
         public int Id { get; set; }
-        [ForeignKey("Course")]
+        [ForeignKey("CourseId")]
         public int CourseId { get; set; }
-        public string UserId { get; set; }
-        public User User { get; set; }
         [Required]
         [MaxLength(150)]
         public string Title { get; set; }
-        public string CourseTitle { get; set; }
-        public Course Course { get; set;}
-
         [Required]
         [MaxLength(150)]
         public string Description { get; set; }

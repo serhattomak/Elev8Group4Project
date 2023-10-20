@@ -1,6 +1,6 @@
 ﻿using WiseProject.Business.Abstract;
 using WiseProject.Business.Constants;
-using WiseProject.DAL.Abstract;
+using WiseProject.Data.DAL.Abstract;
 using WiseProject.Data.Results;
 using WiseProject.Models;
 
@@ -24,7 +24,7 @@ namespace WiseProject.Business.Concrete
             {
                 return new ErrorResult();
             }
-            enrollment.UserId = Convert.ToString(userId);
+            enrollment.UserId = userId;
             enrollment.EnrollmentDate = DateTime.Now;
             _enrollmentDal.Add(enrollment);
             return new SuccessResult();

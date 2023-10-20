@@ -1,7 +1,7 @@
-﻿using WiseProject.DAL.EntityFramework;
+﻿using WiseProject.Data.DAL.EntityFramework;
 using WiseProject.Models;
 
-namespace WiseProject.DAL.Abstract
+namespace WiseProject.Data.DAL.Abstract
 {
     public interface IRoleDal : IEntityRepository<Role>
     {

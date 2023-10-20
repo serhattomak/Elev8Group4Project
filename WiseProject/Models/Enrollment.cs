@@ -5,16 +5,16 @@ namespace WiseProject.Models
 {
     public class Enrollment : IEntity
     {
-        [Key]
         public int Id { get; set; }
-        [ForeignKey("AspNetUsers")]
-        public string UserId { get; set; }
-        public User User { get; set; }
-        [ForeignKey("Course")]
+
+        [ForeignKey("UserId")]
+        public int UserId { get; set; }
+        public virtual User User { get; set; }
+
+        [ForeignKey("CourseId")]
         public int CourseId { get; set; }
-        public string CourseTitle { get; set; }
-        public Course Course { get; set; }
-        [DataType(DataType.DateTime)]
+        public virtual Course Course { get; set; }
+
         public DateTime EnrollmentDate { get; set; }
     }
 }

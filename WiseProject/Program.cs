@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WiseProject.Business.Abstract;
 using WiseProject.Business.Concrete;
-using WiseProject.DAL.Abstract;
 using WiseProject.Data;
+using WiseProject.Data.DAL.Abstract;
+using WiseProject.Data.DAL.Concrete;
 using WiseProject.Models;
 
 
@@ -34,7 +36,27 @@ builder.Services.AddScoped<IAssignmentService, AssignmentManager>();
 
 builder.Services.AddScoped<ICourseDal, CourseDal>();
 builder.Services.AddScoped<ICourseService, CourseManager>();
+#region [ Cookie  ]
 
+CookieBuilder cookieBuilder = new CookieBuilder
+{
+    Name = "LMS",
+    HttpOnly = false,
+    SameSite = SameSiteMode.Lax,
+    SecurePolicy = CookieSecurePolicy.SameAsRequest
+};
+
+builder.Services.ConfigureApplicationCookie(opts =>
+{
+    opts.LoginPath = "/Identity/Account/Login";
+    opts.LogoutPath = "/Identity/Account/Logout";
+    opts.AccessDeniedPath = "/Identity/Account/AccessDenied";
+    opts.Cookie = cookieBuilder;
+    opts.SlidingExpiration = true;
+    opts.ExpireTimeSpan = System.TimeSpan.FromDays(30);
+});
+
+#endregion
 
 var app = builder.Build();
 

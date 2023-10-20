@@ -1,0 +1,63 @@
+﻿@model WiseProject.Models.Enrollment
+
+@{
+    ViewData["Title"] = "EditEnrollment";
+    Layout = "_Layout2";
+}
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Edit Enrollment</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                <li class="breadcrumb-item"><a asp-controller="Instructor" asp-action="EditEnrollment">Instructor / Edit Enrollment</a></li>
+            </ol>
+        </nav>
+    </div>
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Edit Enrollment</h5>
+                        <form asp-action="EditEnrollment">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            <div class="form-group">
+                                <label asp-for="UserId" class="col-sm-2 col-form-label"></label>
+                                <div class="col-sm-10">
+                                    <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                                    <span asp-validation-for="UserId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="CourseId" class="control-label"></label>
+                                <div class="col-sm-10">
+                                    <select asp-for="CourseId" class="form-control" asp-items="ViewBag.CourseId"></select>
+                                    <span asp-validation-for="CourseId" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="EnrollmentDate" class="control-label"></label>
+                                <div class="col-sm-10">
+                                    <input asp-for="EnrollmentDate" class="form-control" />
+                                    <span asp-validation-for="EnrollmentDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="submit" value="Save" class="btn btn-primary" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

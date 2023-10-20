@@ -48,7 +48,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Profile</h1>
+            <h1>Enrollments</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -73,15 +73,20 @@
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-text">Course Id: @enrollment.CourseId</h5>
-                                        <h5 class="card-title">Course: @enrollment.CourseTitle</h5>
+                                        @* <h5 class="card-title">Course: @enrollment.CourseTitle</h5> *@
                                         <h5 class="card-text">User Id: @enrollment.UserId</h5>
-                                        <h5 class="card-text">User: @enrollment.User</h5>
+                                        @* <h5 class="card-text">User: @enrollment.User</h5> *@
                                         <h5 class="card-text">Enrollment Date: @enrollment.EnrollmentDate</h5>
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-controller="Admin" asp-action="EditEnrollment">Edit</a>
-                                        <a asp-controller="Admin" asp-action="DeleteEnrollment">Delete</a>
-
+                                        <ul class="nav nav-pills card-header-pills d-flex justify-content-between">
+                                            <li class="nav-item">
+                                                <a asp-controller="Admin" asp-action="EditEnrollment" asp-route-id="@enrollment.Id" type="button" class="btn btn-warning">Edit</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a asp-controller="Admin" asp-action="DeleteEnrollment" asp-route-id="@enrollment.Id" type="button" class="btn btn-danger">Delete</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             }

@@ -33,7 +33,29 @@
 
     <!-- Template Main CSS File -->
     <link href="~/assets/css/style.css" rel="stylesheet">
+    
+    <style>
+        .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
 
+        .col-md-4 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-info {
+            margin-bottom: 40px;
+        }
+
+        .card-info:last-child {
+            margin-bottom: 0;
+        }
+
+    </style>
     <!-- =======================================================
     * Template Name: NiceAdmin
     * Updated: Sep 18 2023 with Bootstrap v5.3.2
@@ -42,6 +64,7 @@
     * License: https://bootstrapmade.com/license/
     ======================================================== -->
 </head>
+
 
 <body>
     <main id="main" class="main">
@@ -52,38 +75,70 @@
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
                     <li class="breadcrumb-item"><a asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a asp-controller="Instructor" asp-action="Courses">Instructor / Courses</a></li>
+                    <li class="breadcrumb-item"><a asp-controller="Admin" asp-action="Courses">Admin / Courses</a></li>
                 </ol>
             </nav>
         </div><!-- End Page Title -->
 
-        <section class="section profile">
+        <section class="section">
             <div class="col-lg-12">
                 <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Manage Courses</h5>
-                        @if (Model != null && Model.Any())
+                    <div class="row align-items-top">
+                        <div class="float-end mt-2">
+                            <a class="btn btn-primary" asp-controller="Course" asp-action="Create">Create Course</a>
+                        </div>
+                        <!-- Card with an image on left -->
+                        @if (Model.Any())
                         {
-                            foreach (var course in Model)
+
+                            @foreach (var course in Model)
                             {
-                                <div class="card mb-3">
-                                    <div class="card-header">
-                                        Course Id: @course.Id
-                                    </div>
-                                    <div class="card-body">
-                                        <img src="~/images/course/@course.ImageUrl" />
-                                        <h5 class="card-title">Course: @course.Title</h5>
-                                        <h5 class="card-text">Category: @course.Category</h5>
-                                        <h5 class="card-text">Description: @course.Description</h5>
-                                        <h5 class="card-text">Assignments: @course.Assignment</h5>
-                                        <h5 class="card-text">Enrollments: @course.Enrollments</h5>
-                                        <h5 class="card-text">Image: @course.ImageUrl</h5>
-                                    </div>
-                                    <div class="card-footer">
-                                        <a asp-controller="Instructor" asp-action="EditCourse">Edit</a>
-                                    </div>
+                                <div class="col-lg-6">
+                                    <div class="card mb-3">
+                                        <div class="row g-0">
+                                            <div class="col-md-4">
+                                                <img src="~/images/course/@course.ImageUrl" class="img-fluid rounded-start" alt="@course.Title">
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="card-header">
+                                                    Course Id: @course.Id
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="card-info">
+                                                        <span>Title: </span>
+                                                        <a asp-controller="Courses" asp-action="Details" asp-route-id="@course.Id">@course.Title</a>
+                                                    </div>
+                                                    <div class="card-info">
+                                                        <span>Category: </span>
+                                                        <span>@course.Category</span>
+                                                    </div>
+                                                    <div class="card-info">
+                                                        <span>Description: </span>
+                                                        <span>@course.Description</span>
+                                                    </div>
+                                                    <div class="card-info">
+                                                        <span>Assignments Count: </span>
+                                                        <span>@course.Assignment.Count</span>
+                                                    </div>
+                                                    <div class="card-info">
+                                                        <span>Enrollments Count: </span>
+                                                        <span>@course.Enrollments.Count</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <ul class="nav nav-pills card-header-pills d-flex justify-content-between">
+                                                        <li class="nav-item">
+                                                            <a asp-controller="Instructor" asp-action="EditCourse" asp-route-id="@course.Id" type="button" class="btn btn-warning">Edit</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div><!-- End Card with an image on left -->
                                 </div>
                             }
+
                         }
                         else
                         {
@@ -92,21 +147,17 @@
                                     No courses created yet
                                 </div>
                             </div>
-                            <h5 class="card-title">
-                                Use the button below to create a course
-                            </h5>
-                            <a class="btn btn-primary" style="width:auto"
+                            <a class="btn btn-primary" style="width: auto"
                                asp-controller="Course" asp-action="Create">
                                 Add new course
                             </a>
                         }
                     </div>
+                    <!-- End Card with an image on left -->
                 </div>
-            </div>
+            </div><!-- End Left side columns -->
         </section>
-
     </main><!-- End #main -->
 </body>
-
 </html>
 

@@ -1,6 +1,6 @@
 ﻿using WiseProject.Business.Abstract;
 using WiseProject.Business.Constants;
-using WiseProject.DAL.Abstract;
+using WiseProject.Data.DAL.Abstract;
 using WiseProject.Data.Results;
 using WiseProject.Models;
 

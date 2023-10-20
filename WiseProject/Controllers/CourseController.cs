@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WiseProject.Business.Abstract;
+using WiseProject.Data;
 using WiseProject.Models;
 
 namespace WiseProject.Controllers
@@ -9,14 +13,16 @@ namespace WiseProject.Controllers
     {
         ICourseService _courseService;
 
+
+
         public CourseController(ICourseService courseService)
         {
             _courseService = courseService;
         }
 
-        public IActionResult Index(int id =1)
+        public IActionResult Index(int id = 1)
         {
-           // var c = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            // var c = User.FindFirstValue(ClaimTypes.NameIdentifier);
             //var b = User.Identity.Name;
             int max = 6;
 
@@ -66,7 +72,7 @@ namespace WiseProject.Controllers
 
         public IActionResult CreateAssignment(int id)
         {
-            return View(new Assignment() { CourseId = id});
+            return View(new Assignment() { CourseId = id });
         }
 
         [HttpPost]

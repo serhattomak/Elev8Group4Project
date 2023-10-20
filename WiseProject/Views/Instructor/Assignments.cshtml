@@ -61,6 +61,9 @@
             <div class="col-lg-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="float-end mt-2">
+                            <a class="btn btn-primary" asp-controller="Assignment" asp-action="Create">Create Assignment</a>
+                        </div>
                         <h5 class="card-title">Manage Assignments</h5>
                         @if (Model != null && Model.Any())
                         {
@@ -72,15 +75,19 @@
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-title">Assignment: @assignment.Title</h5>
-                                        <h5 class="card-title">Course: @assignment.CourseTitle</h5>
+                                        <h5 class="card-text">Course Id: @assignment.CourseId</h5>
                                         <h5 class="card-title">Description: @assignment.Description</h5>
-                                        <h5 class="card-text">User: @assignment.User</h5>
                                         <h5 class="card-text">Due Date: @assignment.DueDate</h5>
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-controller="Instructor" asp-action="EditAssignment">Edit</a>
-                                        <a asp-controller="Instructor" asp-action="DeleteAssignment">Delete</a>
-
+                                        <ul class="nav nav-pills card-header-pills d-flex justify-content-between">
+                                            <li class="nav-item">
+                                                <a asp-controller="Instructor" asp-action="EditAssignment" asp-route-id="@assignment.Id" type="button" class="btn btn-warning">Edit</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a asp-controller="Instructor" asp-action="DeleteAssignment" asp-route-id="@assignment.Id" type="button" class="btn btn-danger">Delete</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             }
@@ -95,7 +102,7 @@
                             <h5 class="card-title">
                                 Use the button below to create a assignment
                             </h5>
-                            <a class="btn btn-primary" style="width:auto"
+                            <a class="btn btn-primary" style="width: auto"
                                asp-controller="Assignment" asp-action="Create">
                                 Add new assignment
                             </a>
@@ -104,7 +111,6 @@
                 </div>
             </div>
         </section>
-
     </main><!-- End #main -->
 </body>
 

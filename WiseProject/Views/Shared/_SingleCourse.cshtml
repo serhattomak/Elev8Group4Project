@@ -381,8 +381,15 @@
                                 <li><i class="fa fa-user-o"></i>Students :  <span>100</span></li>
                             </ul>
                             <div class="price-button pt-10">
-                                <span>Price : <b>$25</b></span>
-                                <a href="#" class="main-btn">Enroll Now</a>
+                                <span>Price : <b>Free</b></span>
+                                @if (ViewBag.IsEnrolled == true)
+                                {
+                                    <span class="alert alert-info">Already Enrolled</span>
+                                }
+                                else
+                                {
+                                    <a href="@Url.Action("Enroll","Courses",new { courseId = Model.Id })" class="main-btn">Enroll Now</a>
+                                }
                             </div>
                         </div> <!-- course features -->
                     </div>

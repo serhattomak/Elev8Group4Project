@@ -21,19 +21,21 @@ namespace WiseProject.Controllers
         [Authorize(Roles = "Admin,Instructor")]
         public IActionResult Create()
         {
+            var courses = _context.Courses.ToList();
+            ViewBag.Courses = courses;
+
             return View();
         }
 
         [HttpPost]
         [Authorize(Roles = "Admin,Instructor")]
-        public IActionResult Create(Assignment model)
+        public IActionResult Create(Assignment model, int SelectedCourse)
         {
             if (ModelState.IsValid)
             {
                 var newAssignment = new Assignment
                 {
-                    Id = model.Id,
-                    CourseId = model.CourseId,
+                    CourseId = SelectedCourse,
                     Title = model.Title,
                     Description = model.Description,
                     DueDate = model.DueDate

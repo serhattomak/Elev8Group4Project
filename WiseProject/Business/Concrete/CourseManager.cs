@@ -1,12 +1,12 @@
 ﻿using WiseProject.Business.Abstract;
 using WiseProject.Business.Constants;
-using WiseProject.DAL.Abstract;
 using WiseProject.Models;
 using WiseProject.Data.Results;
 using IResult = WiseProject.Data.Results.IResult;
 using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using System.Web;
+using WiseProject.Data.DAL.Abstract;
 
 namespace WiseProject.Business.Concrete
 {
@@ -25,7 +25,6 @@ namespace WiseProject.Business.Concrete
 
         public IResult Add(Course course)
         {
-            course.Id = _currentUser.UserId();
             _courseDal.Add(course);
             return new SuccessResult();
         }
@@ -33,14 +32,14 @@ namespace WiseProject.Business.Concrete
         public IResult Delete(int courseId)
         {
             var course = _courseDal.Get(x => x.Id == courseId);
-            
+
             _courseDal.Delete(course);
             return new SuccessResult();
         }
 
         public IResult AddAssignment(Assignment assignment)
         {
-           // assignment.CourseId = courseId; 
+            // assignment.CourseId = courseId; 
             _assignmentService.Add(assignment);
             return new SuccessResult();
         }
@@ -52,10 +51,10 @@ namespace WiseProject.Business.Concrete
             return new SuccessDataResult<Course>(course, Messages.ItemsListed);
         }
 
-        public IDataResult<List<Course>> GetList(int page,int maxRows)
+        public IDataResult<List<Course>> GetList(int page, int maxRows)
         {
             var courses = _courseDal.GetList().Skip((page - 1) * maxRows).Take(maxRows).ToList();
-            if(courses.Count()==0)
+            if (courses.Count() == 0)
                 return new ErrorDataResult<List<Course>>(Messages.ItemNotFound);
 
             return new SuccessDataResult<List<Course>>(courses, Messages.ItemsListed);
@@ -63,7 +62,6 @@ namespace WiseProject.Business.Concrete
 
         public IResult Update(Course course)
         {
-            course.Id = _currentUser.UserId();
             _courseDal.Update(course);
             return new SuccessResult();
         }

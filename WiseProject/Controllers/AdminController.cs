@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WiseProject.Data;
 using WiseProject.Models;
@@ -26,31 +27,55 @@ namespace WiseProject.Controllers
             return View(users);
         }
 
-        public IActionResult EditUser(string userId)
+        [HttpGet]
+        [Route("/Admin/EditUser/{userId}")]
+        public IActionResult EditUser(int userId)
         {
-            var user = _userManager.FindByIdAsync(userId).Result;
+            var user = _context.Users
+                .Include(x => x.Enrollments)
+                .ThenInclude(x => x.Course)
+                .FirstOrDefault(x => x.Id == userId);
             if (user == null)
             {
-                return RedirectToAction("Users");
+                return NotFound();
             }
             return View(user);
         }
 
         [HttpPost]
-        public IActionResult EditUser(IdentityUser user)
+        public IActionResult EditUser(User user, List<int> SelectedEnrollments)
         {
-            var existingUser = _userManager.FindByIdAsync(user.Id).Result;
+            var existingUser = _userManager.FindByIdAsync(user.Id.ToString()).Result;
             if (existingUser == null)
             {
-                return RedirectToAction("Users");
+                return NotFound();
             }
 
             existingUser.UserName = user.UserName;
             existingUser.Email = user.Email;
 
             var result = _userManager.UpdateAsync(existingUser).Result;
+
             if (result.Succeeded)
             {
+                // Eager Loading ile User'a bağlı Enrollments listesini yükle
+                _context.Entry(existingUser).Collection(u => u.Enrollments).Load();
+
+                // Mevcut Enrollments listesini temizle
+                existingUser.Enrollments.Clear();
+
+                // Seçili Enrollment'leri ekle
+                foreach (var enrollmentId in SelectedEnrollments)
+                {
+                    var enrollment = _context.Enrollments.Find(enrollmentId);
+                    if (enrollment != null)
+                    {
+                        existingUser.Enrollments.Add(enrollment);
+                    }
+                }
+
+                _context.SaveChanges();
+
                 return RedirectToAction("Users");
             }
 
@@ -102,7 +127,7 @@ namespace WiseProject.Controllers
 
         public IActionResult CreateRole()
         {
-            return RedirectToAction("Roles");
+            return View();
         }
 
         [HttpPost]
@@ -110,7 +135,7 @@ namespace WiseProject.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = _roleManager.CreateAsync(new Role(){Name = role.Name}).Result;
+                var result = _roleManager.CreateAsync(new Role() { Name = role.Name }).Result;
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Roles");
@@ -124,9 +149,9 @@ namespace WiseProject.Controllers
             return View(role);
         }
 
-        public IActionResult EditRole(string roleId)
+        public IActionResult EditRole(string id)
         {
-            var role = _roleManager.FindByIdAsync(roleId).Result;
+            var role = _roleManager.FindByIdAsync(id).Result;
             return View(role);
         }
 
@@ -157,9 +182,10 @@ namespace WiseProject.Controllers
             return View(role);
         }
 
-        public IActionResult DeleteRole(int roleId)
+        [HttpGet]
+        public IActionResult DeleteRole(int id)
         {
-            var role = _roleManager.FindByIdAsync(roleId.ToString()).Result;
+            var role = _roleManager.FindByIdAsync(id.ToString()).Result;
             if (role == null)
             {
                 return RedirectToAction("Roles");
@@ -169,9 +195,9 @@ namespace WiseProject.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeleteRole(string roleId)
+        public IActionResult DeleteRole(int? id)
         {
-            var role = _roleManager.FindByIdAsync(roleId).Result;
+            var role = _roleManager.FindByIdAsync(id.ToString()).Result;
             if (role == null)
             {
                 return RedirectToAction("Roles");
@@ -188,18 +214,22 @@ namespace WiseProject.Controllers
                 ModelState.AddModelError("", error.Description);
             }
 
-            return View("DeleteRole", role);
+            return RedirectToAction("Roles");
         }
 
         public IActionResult Courses()
         {
-            var courses = _context.Courses.ToList();
+            var courses = _context.Courses
+                .Include(x => x.Enrollments)
+                .Include(x => x.Assignment)
+                .ToList();
             return View(courses);
         }
 
-        public IActionResult EditCourse(int courseId)
+        [HttpGet]
+        public IActionResult EditCourse(int id)
         {
-            var course = _context.Courses.FirstOrDefault(c => c.Id == courseId);
+            var course = _context.Courses.FirstOrDefault(c => c.Id == id);
             return View(course);
         }
 
@@ -229,9 +259,9 @@ namespace WiseProject.Controllers
             return View(course);
         }
 
-        public IActionResult DeleteCourse(int courseId)
+        public IActionResult DeleteCourse(int id)
         {
-            var course = _context.Courses.FirstOrDefault(c => c.Id == courseId);
+            var course = _context.Courses.FirstOrDefault(c => c.Id == id);
             if (course != null)
             {
                 _context.Courses.Remove(course);
@@ -247,9 +277,16 @@ namespace WiseProject.Controllers
             return View(enrollments);
         }
 
-        public IActionResult EditEnrollment(int enrollmentId)
+        public IActionResult EditEnrollment(int id)
         {
-            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == enrollmentId);
+            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == id);
+            if (enrollment is null)
+                return RedirectToAction("Enrollments");
+
+            ViewBag.UserId = new SelectList(_context.Users, "Id", "Email", enrollment.UserId);
+
+            ViewBag.CourseId = new SelectList(_context.Courses, "Id", "Title", enrollment.CourseId);
+
             return View(enrollment);
         }
 
@@ -265,10 +302,9 @@ namespace WiseProject.Controllers
                 }
 
                 existingEnrollment.EnrollmentDate = enrollment.EnrollmentDate;
-                existingEnrollment.User = enrollment.User;
-                existingEnrollment.Course = enrollment.Course;
+                //existingEnrollment.User = enrollment.User;
                 existingEnrollment.CourseId = enrollment.CourseId;
-                existingEnrollment.CourseTitle = enrollment.CourseTitle;
+                //existingEnrollment.CourseTitle = enrollment.CourseTitle;
                 existingEnrollment.UserId = enrollment.UserId;
 
                 _context.SaveChanges();
@@ -279,9 +315,22 @@ namespace WiseProject.Controllers
             return View(enrollment);
         }
 
-        public IActionResult DeleteEnrollment(int enrollmentId)
+        public IActionResult DeleteEnrollment(int id)
         {
-            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == enrollmentId);
+            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == id);
+            if (enrollment != null)
+            {
+                _context.Enrollments.Remove(enrollment);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Enrollments");
+        }
+
+        [HttpPost]
+        public IActionResult DeleteEnrollment(int? id)
+        {
+            var enrollment = _context.Enrollments.FirstOrDefault(a => a.Id == id);
             if (enrollment != null)
             {
                 _context.Enrollments.Remove(enrollment);
@@ -297,10 +346,15 @@ namespace WiseProject.Controllers
             return View(assignment);
         }
 
-        public IActionResult EditAssignment(int assignmentId)
+        public IActionResult EditAssignment(int id)
         {
-            var assignments = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
-            return View(assignments);
+            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == id);
+            if (assignment is null)
+                return RedirectToAction("Assignments");
+
+            ViewBag.CourseId = new SelectList(_context.Courses, "Id", "Title", assignment.CourseId);
+
+            return View(assignment);
         }
 
         [HttpPost]
@@ -317,12 +371,12 @@ namespace WiseProject.Controllers
                 existingAssignment.Title = assignment.Title;
                 existingAssignment.Description = assignment.Description;
                 existingAssignment.DueDate = assignment.DueDate;
-                existingAssignment.Course = assignment.Course;
+                //existingAssignment.Course = assignment.Course;
                 existingAssignment.Id = assignment.Id;
                 existingAssignment.CourseId = assignment.CourseId;
-                existingAssignment.CourseTitle = assignment.CourseTitle;
-                existingAssignment.User = assignment.User;
-                existingAssignment.UserId = assignment.UserId;
+                //existingAssignment.CourseTitle = assignment.CourseTitle;
+                //existingAssignment.User = assignment.User;
+                //existingAssignment.UserId = assignment.UserId;
 
                 _context.SaveChanges();
 
@@ -332,9 +386,23 @@ namespace WiseProject.Controllers
             return View(assignment);
         }
 
-        public IActionResult DeleteAssignment(int assignmentId)
+
+        [HttpGet]
+        public IActionResult DeleteAssignment(int id)
         {
-            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
+            var assignment = _context.Assignments.Find(id);
+            if (assignment == null)
+            {
+                return RedirectToAction("Assignments");
+            }
+
+            return View(assignment);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAssignment(int? id)
+        {
+            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == id);
             if (assignment != null)
             {
                 _context.Assignments.Remove(assignment);
@@ -343,5 +411,7 @@ namespace WiseProject.Controllers
 
             return RedirectToAction("Assignments");
         }
+
+
     }
 }

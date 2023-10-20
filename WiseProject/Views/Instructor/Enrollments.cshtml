@@ -73,14 +73,18 @@
                                     </div>
                                     <div class="card-body">
                                         <h5 class="card-text">Course Id: @enrollment.CourseId</h5>
-                                        <h5 class="card-title">Course Title: @enrollment.CourseTitle</h5>
+                                        <h5 class="card-title">Course Title: @enrollment.Course.Title</h5>
                                         <h5 class="card-text">User Id: @enrollment.UserId</h5>
-                                        <h5 class="card-text">User: @enrollment.User</h5>
+                                        <h5 class="card-text">User: @enrollment.User.Email</h5>
                                         <h5 class="card-text">Enrollment Date: @enrollment.EnrollmentDate</h5>
                                     </div>
-                                    <div class="card-footer">
-                                        <a asp-controller="Instructor" asp-action="EditEnrollment">Edit</a>
-                                    </div>
+                                    @* <div class="card-footer">
+                                        <ul class="nav nav-pills card-header-pills d-flex justify-content-between">
+                                            <li class="nav-item">
+                                                <a asp-controller="Instructor" asp-action="EditEnrollment" asp-route-id="@enrollment.Id" type="button" class="btn btn-warning">Edit</a>
+                                            </li>
+                                        </ul>
+                                    </div> *@
                                 </div>
                             }
                         }

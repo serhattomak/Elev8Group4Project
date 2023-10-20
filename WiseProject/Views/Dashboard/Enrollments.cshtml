@@ -59,25 +59,20 @@
             </nav>
         </div><!-- End Page Title -->
 
-        <section class="section dashboard">
-            <div class="row">
 
-                <!-- Left side columns -->
-                <div class="col-lg-12">
-                    <div class="row">
-                        <!-- Card with an image on left -->
-                        @if (Model.Any())
-                        {
-                            @foreach (var item in Model)
-                            {
-                                @await Html.PartialAsync("_EnrollmentsItem",item)
-                            }
-                        }
-                        <!-- End Card with an image on left -->
-                    </div><!-- End Recent Sales -->
-                </div>
 
-                    
+        <section class="section">
+            <div class="row align-items-top">
+
+                <!-- Card with an image on left -->
+                @if (Model.Any())
+                {
+                    @await Html.PartialAsync("_EnrollmentsItem",Model)
+
+                }
+                <!-- End Card with an image on left -->
+
+
             </div><!-- End Left side columns -->
             @* <!-- Right side columns -->
             <div class="col-lg-4">

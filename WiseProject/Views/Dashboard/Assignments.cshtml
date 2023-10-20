@@ -1,4 +1,4 @@
-﻿@model List<WiseProject.Models.Assignment>
+﻿@model List<AssignmentResponseModel>
 
 @{
     ViewData["Title"] = "Group 4 Project";
@@ -81,7 +81,7 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
-                                            <th scope="row">@item.CourseId</th>
+                                            <td>@item.Id</td>
                                             <td>@item.Title</td>
                                             <td>@item.CourseTitle</td>
                                             <td>@item.Description</td>

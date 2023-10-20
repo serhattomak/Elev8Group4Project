@@ -2,7 +2,7 @@
 using WiseProject.Models;
 using System.Linq.Expressions;
 
-namespace WiseProject.DAL.EntityFramework
+namespace WiseProject.Data.DAL.EntityFramework
 {
     public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
     where TEntity : class, IEntity, new()
@@ -14,7 +14,15 @@ namespace WiseProject.DAL.EntityFramework
             {
                 var addedEntity = context.Entry(entity);
                 addedEntity.State = EntityState.Added;
-                context.SaveChanges();
+                try
+                {
+                    context.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
             }
         }
 

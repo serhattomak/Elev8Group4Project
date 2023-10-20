@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,13 @@ namespace WiseProject.Controllers
     public class CoursesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<User> _userManager;
 
-        public CoursesController(ApplicationDbContext context)
+
+        public CoursesController(ApplicationDbContext context, UserManager<User> userManager)
         {
             _context = context;
+            _userManager= userManager;
         }
 
         // GET: Courses
@@ -31,20 +35,29 @@ namespace WiseProject.Controllers
         // GET: Courses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Courses == null)
-            {
-                return NotFound();
-            }
+            //if (id == null || _context.Courses == null)
+            //{
+            //    return NotFound();
+            //}
 
-            var course = await _context.Courses
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (course == null)
-            {
-                return NotFound();
-            }
+            //var course = await _context.Courses
+            //    .FirstOrDefaultAsync(m => m.Id == id);
+            //if (course == null)
+            //{
+            //    return NotFound();
+            //}
 
+            //return View(course);
+            var course = await _context.Courses.FindAsync(id);
+            
+            var userId = _userManager.GetUserId(User);
+            var convertedId = Convert.ToInt32(userId);
+            var isEnrolled = await _context.Enrollments.AnyAsync(e => e.CourseId == id && e.UserId == convertedId);
+
+            ViewBag.IsEnrolled = isEnrolled;
             return View(course);
         }
+
 
         // GET: Courses/Create
         [Authorize(Roles = "Admin,Instructor")]
@@ -165,6 +178,23 @@ namespace WiseProject.Controllers
         private bool CourseExists(int id)
         {
           return (_context.Courses?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Enroll(int courseId)
+        {
+            var userId = _userManager.GetUserId(User);
+            var convertedId = Convert.ToInt32(userId);
+            var enrollment = new Enrollment
+            {
+                CourseId = courseId,
+                UserId = convertedId,
+                EnrollmentDate = DateTime.UtcNow
+            };
+            _context.Enrollments.Add(enrollment);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Details", new { id = courseId });
         }
     }
 }

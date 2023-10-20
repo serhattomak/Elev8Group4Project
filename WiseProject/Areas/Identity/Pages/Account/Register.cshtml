@@ -68,13 +68,7 @@
                                         <p class="text-center small">Enter your personal details to create account</p>
                                     </div>
 
-                                    <form class="row g-3 needs-validation" asp-validation-summary="ModelOnly">
-                                        <div class="col-12">
-                                            <label for="yourName" class="form-label">Your Name</label>
-                                            <input type="text" name="name" class="form-control" id="yourName" required />
-                                            <div class="invalid-feedback">Please, enter your name!</div>
-                                        </div>
-
+                                    <form class="row g-3 needs-validation" asp-route-returnUrl="@Model.ReturnUrl" method="post" asp-validation-summary="ModelOnly">
                                         <div class="col-12">
                                             <label asp-for="Input.Email" class="form-label">Your Email</label>
                                             <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />

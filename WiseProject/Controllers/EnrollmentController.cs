@@ -25,17 +25,16 @@ namespace WiseProject.Controllers
         // POST: Enrollment/CreateEnrollment
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(int courseid, DateTime enrollmentdate, string userid, string coursetitle)
+        public IActionResult Create(int courseid, DateTime enrollmentdate, int userid, string coursetitle)
         {
             if (ModelState.IsValid)
             {
-                // Yeni kayıt nesnesini oluşturun ve gerekli değerleri ayarlayın
                 var enrollment = new Enrollment
                 {
                     CourseId = courseid,
                     EnrollmentDate = enrollmentdate,
                     UserId = userid,
-                    CourseTitle = coursetitle
+                    //CourseTitle = coursetitle
                 };
 
                 try

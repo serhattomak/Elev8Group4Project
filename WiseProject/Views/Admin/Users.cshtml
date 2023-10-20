@@ -47,7 +47,7 @@
     <main id="main" class="main">
 
         <div class="pagetitle">
-            <h1>Profile</h1>
+            <h1>Users</h1>
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index">Home</a></li>
@@ -74,9 +74,14 @@
                                         <h5 class="card-title">User: @user.UserName</h5>
                                     </div>
                                     <div class="card-footer">
-                                        <a asp-controller="Admin" asp-action="EditUser">Edit</a>
-                                        <a asp-controller="Admin" asp-action="DeleteUser">Delete</a>
-
+                                        <ul class="nav nav-pills card-header-pills d-flex justify-content-between">
+                                            <li class="nav-item">
+                                                <a asp-controller="Admin" asp-action="EditUser" asp-route-id="@user.Id" type="button" class="btn btn-warning">Edit</a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a asp-controller="Admin" asp-action="DeleteUser" asp-route-id="@user.Id" type="button" class="btn btn-danger">Delete</a>
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             }

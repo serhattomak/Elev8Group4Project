@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using WiseProject.Data;
 using WiseProject.Models;
@@ -19,9 +20,10 @@ namespace WiseProject.Controllers
             return View(courses);
         }
 
-        public IActionResult EditCourse(int courseId)
+        [HttpGet]
+        public IActionResult EditCourse(int id)
         {
-            var course = _context.Courses.FirstOrDefault(c => c.Id == courseId);
+            var course = _context.Courses.FirstOrDefault(c => c.Id == id);
             return View(course);
         }
 
@@ -53,13 +55,23 @@ namespace WiseProject.Controllers
 
         public IActionResult Enrollments()
         {
-            var enrollments = _context.Enrollments.ToList();
+            var enrollments = _context.Enrollments
+                .Include(e => e.Course)
+                .Include(e => e.User)
+                .ToList();
             return View(enrollments);
         }
 
-        public IActionResult EditEnrollment(int enrollmentId)
+        public IActionResult EditEnrollment(int id)
         {
-            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == enrollmentId);
+            var enrollment = _context.Enrollments.FirstOrDefault(e => e.Id == id);
+            if (enrollment is null)
+                return RedirectToAction("Enrollments");
+
+            ViewBag.UserId = new SelectList(_context.Users, "Id", "Email", enrollment.UserId);
+
+            ViewBag.CourseId = new SelectList(_context.Courses, "Id", "Title", enrollment.CourseId);
+
             return View(enrollment);
         }
 
@@ -75,10 +87,9 @@ namespace WiseProject.Controllers
                 }
 
                 existingEnrollment.EnrollmentDate = enrollment.EnrollmentDate;
-                existingEnrollment.User = enrollment.User;
-                existingEnrollment.Course = enrollment.Course;
+                //existingEnrollment.User = enrollment.User;
                 existingEnrollment.CourseId = enrollment.CourseId;
-                existingEnrollment.CourseTitle = enrollment.CourseTitle;
+                //existingEnrollment.CourseTitle = enrollment.CourseTitle;
                 existingEnrollment.UserId = enrollment.UserId;
 
                 _context.SaveChanges();
@@ -95,10 +106,15 @@ namespace WiseProject.Controllers
             return View(assignment);
         }
 
-        public IActionResult EditAssignment(int assignmentId)
+        public IActionResult EditAssignment(int id)
         {
-            var assignments = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
-            return View(assignments);
+            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == id);
+            if (assignment is null)
+                return RedirectToAction("Assignments");
+
+            ViewBag.CourseId = new SelectList(_context.Courses, "Id", "Title", assignment.CourseId);
+
+            return View(assignment);
         }
 
         [HttpPost]
@@ -115,12 +131,12 @@ namespace WiseProject.Controllers
                 existingAssignment.Title = assignment.Title;
                 existingAssignment.Description = assignment.Description;
                 existingAssignment.DueDate = assignment.DueDate;
-                existingAssignment.Course = assignment.Course;
+                //existingAssignment.Course = assignment.Course;
                 existingAssignment.Id = assignment.Id;
                 existingAssignment.CourseId = assignment.CourseId;
-                existingAssignment.CourseTitle = assignment.CourseTitle;
-                existingAssignment.User = assignment.User;
-                existingAssignment.UserId = assignment.UserId;
+                //existingAssignment.CourseTitle = assignment.CourseTitle;
+                //existingAssignment.User = assignment.User;
+                //existingAssignment.UserId = assignment.UserId;
 
                 _context.SaveChanges();
 
@@ -130,9 +146,22 @@ namespace WiseProject.Controllers
             return View(assignment);
         }
 
-        public IActionResult DeleteAssignment(int assignmentId)
+        [HttpGet]
+        public IActionResult DeleteAssignment(int id)
         {
-            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == assignmentId);
+            var assignment = _context.Assignments.Find(id);
+            if (assignment == null)
+            {
+                return RedirectToAction("Assignments");
+            }
+
+            return View(assignment);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteAssignment(int? id)
+        {
+            var assignment = _context.Assignments.FirstOrDefault(a => a.Id == id);
             if (assignment != null)
             {
                 _context.Assignments.Remove(assignment);
@@ -141,5 +170,6 @@ namespace WiseProject.Controllers
 
             return RedirectToAction("Assignments");
         }
+
     }
 }
