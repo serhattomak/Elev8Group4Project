@@ -21,8 +21,8 @@ namespace WiseProject.Models
                 }
             }
 
-            var email = "admin@admin.com";
-            var pass = "Abcd!1234";
+            var email = "admin@test.com";
+            var pass = "Abcd!12345";
 
             if (userManager.FindByEmailAsync(email).Result == null)
             {

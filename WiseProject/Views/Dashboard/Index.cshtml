@@ -67,14 +67,14 @@
                         <div class="col-xxl-4 col-md-6">
                             <div class="card info-card sales-card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total Courses</h5>
+                                    <h5 class="card-title">Enrollments</h5>
 
                                     <div class="d-flex align-items-center">
                                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="bi bi-journals"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>5</h6>
+                                            <h6><a asp-controller="Dashboard" asp-action="Enrollments">Enrollments</a></h6>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,7 @@
                                             <i class="bi bi-pencil"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>2</h6>
+                                            <h6><a asp-controller="Dashboard" asp-action="Assignments">Assignments</a></h6>
 
                                         </div>
                                     </div>
@@ -104,14 +104,14 @@
 
                             <div class="card info-card customers-card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Courses Done</h5>
+                                    <h5 class="card-title">Profile</h5>
 
                                     <div class="d-flex align-items-center">
                                         <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                             <i class="bi bi-check-all"></i>
                                         </div>
                                         <div class="ps-3">
-                                            <h6>3</h6>
+                                            <h6><a asp-controller="Dashboard" asp-action="Profile">Profile</a></h6>
                                         </div>
                                     </div>
 
@@ -119,43 +119,6 @@
                             </div>
 
                         </div><!-- End Customers Card -->
-                        <!-- Recent Sales -->
-                        <div class="col-12">
-                            <div class="card recent-sales overflow-auto">
-                                <div class="card-body">
-                                    <h5 class="card-title">Enrollments</h5>
-
-                                    <table class="table table-borderless datatable">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col">Course</th>
-                                                <th scope="col">Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td><a asp-controller="Courses" asp-action="Details" asp-route-id="1" class="text-primary">HTML</a></td>
-                                                <td><span class="badge bg-success">Done</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#" class="text-primary">CSS</a></td>
-                                                <td><span class="badge bg-warning">Pending</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#" class="text-primary">JavaScript</a></td>
-                                                <td><span class="badge bg-success">Done</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td><a href="#" class="text-primary">ASP.NET Core</a></td>
-                                                <td><span class="badge bg-danger">Failed</span></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-
-                                </div>
-
-                            </div>
-                        </div><!-- End Recent Sales -->
                     </div>
                 </div><!-- End Left side columns -->
                 @* <!-- Right side columns -->

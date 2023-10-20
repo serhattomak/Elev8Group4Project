@@ -49,7 +49,7 @@
                                 <div class="form-group">
                                     <label asp-for="ImageUrl" class="control-label"></label>
                                     <div class="col-sm-10">
-                                        <input asp-for="ImageUrl" class="form-control" type="text" />
+                                        <input asp-for="ImageUrl" class="form-control" type="file" />
                                         <span asp-validation-for="ImageUrl" class="text-danger"></span>
                                     </div>
                                 </div>
@@ -63,10 +63,6 @@
         </div>
     </section>
 </main>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

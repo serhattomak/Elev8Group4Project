@@ -58,13 +58,13 @@ namespace WiseProject.Controllers
 
             if (result.Succeeded)
             {
-                // Eager Loading ile User'a bağlı Enrollments listesini yükle
+
                 _context.Entry(existingUser).Collection(u => u.Enrollments).Load();
 
-                // Mevcut Enrollments listesini temizle
+                
                 existingUser.Enrollments.Clear();
 
-                // Seçili Enrollment'leri ekle
+                
                 foreach (var enrollmentId in SelectedEnrollments)
                 {
                     var enrollment = _context.Enrollments.Find(enrollmentId);
